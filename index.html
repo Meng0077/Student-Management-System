@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="./index.css"/>
+		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./index.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body>
+		<div id="app">
+			<table id="add">
+				<tr class="nav">
+					<th>name</th>
+					<th>student id</th>
+					<th>score</th>
+					
+				</tr>
+				<tr>
+					<td><input type="text" v-model="newstudent.name" /></td>
+					<td><input type="text" v-model="newstudent.id" /></td>
+					<td><input type="text" v-model="newstudent.score" /></td>
+				</tr>
+				<tr id="addnew">
+					<td colspan="4">
+						<button type="button" v-on:click="add($event)">add</button>
+						<button type="button" v-on:click="search($event)">search</button>
+						<button type="button" v-on:click="turnBack($event)">turn back</button>
+					</td>
+				</tr>
+				
+			</table>
+			<table id="record">
+				<tr class="nav">
+					<th>
+						<input type="checkbox" class="check all" id="checkall" v-on:click="checkAll($event)" v-model:checked="checkall"/>
+					</th>
+					<th>number</th>
+					<th>name</th>
+					<th>student id</th>
+					<th>score</th>
+					<th>time</th>
+					<th>operation</th>
+				</tr>
+				<!-- s使用for, 每次删除重绘？？ -->
+				<tr v-for="(student, index) in students" v-show="student.show">
+					<td><input type="checkbox" class="check" v-on:click="checkbox($event)" v-model:checked="student.checked"/></td>
+					<td><input type="text" v-bind:value="student.number" :disabled="student.isdisabled"/></td>
+					<td><input type="text" v-model:value="student.name" :disabled="student.isdisabled"/></td>
+					<td><input type="text" v-model:value="student.id" :disabled="student.isdisabled"/></td>
+					<td><input type="text" v-model:value="student.score" :disabled="student.isdisabled"/></td>
+					<td><input type="text" v-bind:value="student.time |gettime" :disabled="student.isdisabled"/></td>
+					<!-- 用id去做查询，删除，修改 -->
+					<td class="action" v-bind:id="index">
+						<button type="button" class="modify" v-on:click="modify($event, index)">modify</button>
+						<button type="button" class="delete" v-on:click = "remove($event, index)">delete</button>
+					</td>
+				</tr>
+				
+			</table>
+		
+		</div>
+	</body>
+</html>
